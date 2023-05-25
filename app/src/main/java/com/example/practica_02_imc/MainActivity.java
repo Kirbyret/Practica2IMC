@@ -1,0 +1,86 @@
+package com.example.practica_02_imc;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.text.DecimalFormat;
+
+public class MainActivity extends AppCompatActivity {
+    private Button btnCalcular;
+    private Button btnLimpiar;
+    private Button btnCerrar;
+    private EditText txtCm;
+    private EditText txtKg;
+    private EditText txtImc;
+    private double cm;
+    private double kg;
+    private double imc;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        DecimalFormat df = new DecimalFormat("#.00");
+
+
+
+            iniciar();
+
+
+
+
+            btnCalcular.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {//Validación de campos
+                    if(txtCm.getText().toString().matches("") || txtKg.getText().toString().matches("") || txtCm.getText().toString().matches("0") || txtKg.getText().toString().matches("0"))
+                    {
+                        Toast.makeText(MainActivity.this,"Falta Capturar Campos",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        cm=Double.parseDouble(txtCm.getText().toString());//Parseamos el contenido
+                        kg=Double.parseDouble(txtKg.getText().toString());
+                        cm=cm/100;//Lo convertimos a metros los centimetros capturados
+
+                        imc=kg/(cm*cm);
+
+                        txtImc.setText(df.format(imc));
+                    }
+
+                }
+            });
+
+            btnLimpiar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    txtCm.setText("");
+                    txtKg.setText("");
+                    txtImc.setText("");
+                }
+            });
+
+            btnCerrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+    private void iniciar()
+    {
+        btnCalcular=(Button) findViewById(R.id.btnCalcular);
+        btnLimpiar=(Button) findViewById(R.id.btnLimpiar);
+        btnCerrar=(Button) findViewById(R.id.btnCerrar);
+        txtCm=(EditText) findViewById(R.id.txtcentimetros);
+        txtKg=(EditText) findViewById(R.id.txtkilos);
+        txtImc=(EditText) findViewById(R.id.txtimc);
+    }
+
+    }
+
+
